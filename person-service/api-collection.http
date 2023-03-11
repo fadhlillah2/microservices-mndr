@@ -14,8 +14,8 @@ POST http://localhost:8082/api/person
 Content-Type: application/json
 
 {
-  "name": "r2",
-  "age": 22,
+  "name": "r3",
+  "age": 25,
   "active": true
 }
 

@@ -18,12 +18,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/person")
 @RequiredArgsConstructor
-public class personController {
+public class PersonController {
     private RestTemplate restTemplate;
     private final PersonService personService;
 
     @Autowired
-    public personController(RestTemplate restTemplate, PersonService personService) {
+    public PersonController(RestTemplate restTemplate, PersonService personService) {
         this.restTemplate = restTemplate;
         this.personService = personService;
     }
@@ -42,45 +42,36 @@ public class personController {
     @GetMapping
     public List<Person> getAllPerson(){
         log.info("Hit controller for getting all lessons");
-        List<Person> personList = personService.getAllPerson();
-        return personList;
+        return personService.getAllPerson();
     }
 
     @PostMapping("")
-    public ResponseEntity<ResponseDTO> create(@RequestBody PersonDTO requestBody) {
+    public ResponseEntity<ResponseDTO<Object>> create(@RequestBody PersonDTO requestBody) {
         personService.createPerson(requestBody);
-        return new ResponseEntity<>(ResponseDTO.builder()
+        ResponseDTO<Object> responseDTO = ResponseDTO.builder()
                 .httpStatus(HttpStatus.CREATED)
                 .message("success add person")
-                .data(requestBody).build(), HttpStatus.CREATED);
+                .data(requestBody)
+                .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @GetMapping("/findActiveUsersWithAgeGreaterThan")
     public List<Person> findActiveUsersWithAgeGreaterThan(int age){
         log.info("Hit controller for findActiveUsersWithAgeGreaterThan");
-        List<Person> personList = personService.findActiveUsersWithAgeGreaterThan(age);
-        return personList;
+        return personService.findActiveUsersWithAgeGreaterThan(age);
     }
 
     @GetMapping("/findByName")
     public List<Person> findByName(String name){
         log.info("Hit controller for findByName");
-        List<Person> personList = personService.findByName(name);
-        return personList;
-    }
-
-    @GetMapping("/findByNamev1")
-    public List<PersonDTO> findByNamev1(String name){
-        log.info("Hit controller for findByName");
-        List<PersonDTO> personList = personService.findByNamev1(name);
-        return personList;
+        return personService.findByName(name);
     }
 
     @GetMapping("/findByNamev2")
     public List<Person> findByNamev2(String name){
         log.info("Hit controller for findByName");
-        List<Person> personList = personService.findByNamev2(name);
-        return personList;
+        return personService.findByNamev2(name);
     }
 
 }

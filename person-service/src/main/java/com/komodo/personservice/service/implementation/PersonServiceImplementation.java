@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -45,12 +46,12 @@ public class PersonServiceImplementation implements PersonService {
                 .stream()
                 .filter(Person::isActive)
                 .filter(user -> user.getAge() > age)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public List<Person> findByName(String name) {
-        return (List<Person>) personRepository.findByName(name);
+        return personRepository.findByName(name);
     }
 
 
