@@ -69,6 +69,18 @@ public class personController {
         return personList;
     }
 
+    @GetMapping("/findByNamev1")
+    public List<PersonDTO> findByNamev1(String name){
+        log.info("Hit controller for findByName");
+        List<PersonDTO> personList = personService.findByNamev1(name);
+        return personList;
+    }
 
+    @GetMapping("/findByNamev2")
+    public List<Person> findByNamev2(String name){
+        log.info("Hit controller for findByName");
+        List<Person> personList = personService.findByNamev2(name);
+        return personList;
+    }
 
 }

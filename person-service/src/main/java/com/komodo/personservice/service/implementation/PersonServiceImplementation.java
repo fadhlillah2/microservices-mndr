@@ -4,11 +4,14 @@ import com.komodo.personservice.dto.PersonDTO;
 import com.komodo.personservice.entity.Person;
 import com.komodo.personservice.repository.PersonRepository;
 import com.komodo.personservice.service.PersonService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +21,7 @@ import java.util.stream.Collectors;
 public class PersonServiceImplementation implements PersonService {
     private final PersonRepository personRepository;
     private final ModelMapper modelMapper;
+    private final EntityManager entityManager;
 
     @Override
     public List<Person> getAllPerson() {
@@ -49,5 +53,15 @@ public class PersonServiceImplementation implements PersonService {
         return (List<Person>) personRepository.findByName(name);
     }
 
+
+    @Override
+    public List<Person> findByNamev2(String name) {
+        String queryString = "SELECT e FROM Person e WHERE e.name = :name";
+        Query query = entityManager.createQuery(queryString, Person.class);
+        query.setParameter("name", name);
+        List<Person> person = query.getResultList();
+        if(person.isEmpty()) return new ArrayList<>();
+        return person;
+    }
 
 }

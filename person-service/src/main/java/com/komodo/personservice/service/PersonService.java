@@ -15,4 +15,6 @@ public interface PersonService {
     List<Person> findByName(String name);
 
     List<Person> findActiveUsersWithAgeGreaterThan(int age);
+
+    List<Person> findByNamev2(String name);
 }
