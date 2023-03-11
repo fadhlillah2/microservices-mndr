@@ -4,6 +4,7 @@ package com.komodo.personservice.dto;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,6 +12,6 @@ import org.springframework.http.HttpStatus;
 @ToString
 public class ResponseDTO<T> {
     public HttpStatus httpStatus;
-    public static String message;
+    public  String message;
     private T data;
 }

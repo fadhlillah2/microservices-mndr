@@ -1,20 +1,17 @@
-package com.komodo.personservice.entity;
+package com.komodo.personservice.dto;
 
-import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
-public class Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PersonDTO implements Serializable {
     private Long id;
     private String name;
     private int age;
     private boolean isActive;
-
 }

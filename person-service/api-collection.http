@@ -1,3 +1,33 @@
+GET http://localhost:8082/api/person/findByName?name=r2
+Accept: application/json
+
+###
+GET http://localhost:8082/api/person/findActiveUsersWithAgeGreaterThan?age=30
+Accept: application/json
+
+###
+POST http://localhost:8082/api/person
+Content-Type: application/json
+
+{
+  "name": "r2",
+  "age": 22,
+  "active": true
+}
+
+###
+GET http://localhost:8082/api/person
+Accept: application/json
+
+###
+GET http://localhost:8082/api/person/1
+Accept: application/json
+
+###
+GET http://localhost:8082/api/person/tes
+Accept: application/json
+
+###
 GET http://localhost:8082/api/person/get
 Accept: application/json
 
