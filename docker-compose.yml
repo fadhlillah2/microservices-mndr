@@ -2,7 +2,7 @@ version: '3'
 
 services:
   product-service:
-#    platform: 'linux/amd64'
+    #    platform: 'linux/amd64'
     image: 'product-service:latest'
     container_name: product-service
     build:
@@ -43,6 +43,37 @@ services:
       - '6379:6379'
     volumes:
       - cache_redis_db:/data
+  person-service:
+    #    platform: 'linux/amd64'
+    image: 'person-service:latest'
+    container_name: person-service
+    build:
+      context: person-service
+      dockerfile: Dockerfile
+    depends_on:
+      - person-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://person-db:5432/person_db
+      - SPRING_DATASOURCE_USERNAME=person_db
+      - SPRING_DATASOURCE_PASSWORD=person_db
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SERVER_PORT=8082
+    expose:
+      - "8082"
+    ports:
+      - "8082:8082"
+  person-db:
+    image: 'postgres:15-alpine'
+    container_name: person-db
+    environment:
+      - POSTGRES_USER=person_db
+      - POSTGRES_PASSWORD=person_db
+      - POSTGRES_DB=person_db
+    volumes:
+      - person_db:/var/lib/postgresql/data
+    ports:
+      - "5440:5432"
 volumes:
   product_db:
   cache_redis_db:
+  person_db:

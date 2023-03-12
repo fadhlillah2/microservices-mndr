@@ -1,4 +1,4 @@
-GET http://localhost:8082/api/person/findByNamev2?name=r2
+GET http://localhost:8082/api/person/findByNamev2?name=r4
 Accept: application/json
 
 ###
@@ -14,7 +14,7 @@ POST http://localhost:8082/api/person
 Content-Type: application/json
 
 {
-  "name": "r3",
+  "name": "r5",
   "age": 25,
   "active": true
 }

@@ -1,4 +1,4 @@
-APP_IMAGE_LIST ?= product-service cache-redis-db
+APP_IMAGE_LIST ?= product-service person-service cache-redis-db
 
 start : down remove up
 
@@ -13,6 +13,9 @@ up:
 
 build:
 	docker compose build
+
+ls:
+	docker compose ps
 
 restart: down up
 

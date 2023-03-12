@@ -9,22 +9,25 @@ import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@CacheConfig(cacheNames = {"personCache"})
 public class PersonServiceImplementation implements PersonService {
     private final PersonRepository personRepository;
     private final ModelMapper modelMapper;
     private final EntityManager entityManager;
 
     @Override
+//    @Cacheable
     public List<Person> getAllPerson() {
 
         List<Person> personList = personRepository.findAll();
@@ -34,6 +37,7 @@ public class PersonServiceImplementation implements PersonService {
     }
 
     @Override
+//    @CacheEvict(value = "persons", allEntries = true)
     public void createPerson(PersonDTO requestBody) {
         Person person = modelMapper.map(requestBody, Person.class);
         personRepository.save(person);
