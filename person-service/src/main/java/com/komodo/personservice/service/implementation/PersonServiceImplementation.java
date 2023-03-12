@@ -20,14 +20,14 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@CacheConfig(cacheNames = {"personCache"})
+@CacheConfig(cacheNames = {"persons"})
 public class PersonServiceImplementation implements PersonService {
     private final PersonRepository personRepository;
     private final ModelMapper modelMapper;
     private final EntityManager entityManager;
 
     @Override
-//    @Cacheable
+    @Cacheable
     public List<Person> getAllPerson() {
 
         List<Person> personList = personRepository.findAll();
@@ -37,7 +37,7 @@ public class PersonServiceImplementation implements PersonService {
     }
 
     @Override
-//    @CacheEvict(value = "persons", allEntries = true)
+    @CacheEvict(value = "persons", allEntries = true)
     public void createPerson(PersonDTO requestBody) {
         Person person = modelMapper.map(requestBody, Person.class);
         personRepository.save(person);

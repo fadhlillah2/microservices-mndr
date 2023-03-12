@@ -10,16 +10,16 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - product-db
-      - cache-redis-db
+#      - cache-redis-db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://product-db:5432/product_db
       - SPRING_DATASOURCE_USERNAME=product_db
       - SPRING_DATASOURCE_PASSWORD=product_db
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SERVER_PORT=8081
-      - spring.redis.host=cache-redis-db
-      - spring.redis.port=6379
-      - REDIS_PASSWORD=eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+#      - spring.redis.host=cache-redis-db
+#      - spring.redis.port=6379
+#      - REDIS_PASSWORD=eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     expose:
       - "8081"
     ports:
@@ -52,12 +52,16 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - person-db
+      - cache-redis-db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://person-db:5432/person_db
       - SPRING_DATASOURCE_USERNAME=person_db
       - SPRING_DATASOURCE_PASSWORD=person_db
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SERVER_PORT=8082
+      - spring.redis.host=cache-redis-db
+      - spring.redis.port=6379
+      - REDIS_PASSWORD=eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     expose:
       - "8082"
     ports:

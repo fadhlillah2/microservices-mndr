@@ -38,13 +38,13 @@ public class RedisConfig extends CachingConfigurerSupport implements CachingConf
         return redisCacheManager;
     }
 
-//    @Bean
-//    public LettuceConnectionFactory redisConnectionFactory() {
-//        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-//        config.setHostName("redis-container");
-//        config.setPort(6379);
-//        return new LettuceConnectionFactory(config);
-//    }
+    @Bean
+    public LettuceConnectionFactory redisConnectionFactory() {
+        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+        config.setHostName("cache-redis-db");
+        config.setPort(6379);
+        return new LettuceConnectionFactory(config);
+    }
 
 
 }

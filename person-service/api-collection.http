@@ -14,7 +14,7 @@ POST http://localhost:8082/api/person
 Content-Type: application/json
 
 {
-  "name": "r5",
+  "name": "r6",
   "age": 25,
   "active": true
 }
@@ -24,7 +24,7 @@ GET http://localhost:8082/api/person
 Accept: application/json
 
 ###
-GET http://localhost:8082/api/person/1
+GET http://localhost:8082/api/person/5
 Accept: application/json
 
 ###
