@@ -1,6 +1,8 @@
 package com.komodo.personservice.service;
 
 
+import com.komodo.personservice.dto.BookingAcknowledgement;
+import com.komodo.personservice.dto.BookingRequest;
 import com.komodo.personservice.dto.PersonDTO;
 import com.komodo.personservice.entity.Person;
 
@@ -17,4 +19,6 @@ public interface PersonService {
     List<Person> findActiveUsersWithAgeGreaterThan(int age);
 
     List<Person> findByNamev2(String name);
+
+    BookingAcknowledgement bookTicket(BookingRequest request);
 }

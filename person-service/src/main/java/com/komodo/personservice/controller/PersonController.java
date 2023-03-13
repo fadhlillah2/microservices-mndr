@@ -1,5 +1,7 @@
 package com.komodo.personservice.controller;
 
+import com.komodo.personservice.dto.BookingAcknowledgement;
+import com.komodo.personservice.dto.BookingRequest;
 import com.komodo.personservice.dto.PersonDTO;
 import com.komodo.personservice.dto.ResponseDTO;
 import com.komodo.personservice.entity.Person;
@@ -72,6 +74,11 @@ public class PersonController {
     public List<Person> findByNamev2(String name){
         log.info("Hit controller for findByName");
         return personService.findByNamev2(name);
+    }
+
+    @PostMapping("/booking")
+    public BookingAcknowledgement bookTicket(@RequestBody BookingRequest request){
+        return personService.bookTicket(request);
     }
 
 }

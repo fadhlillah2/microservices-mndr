@@ -1,9 +1,14 @@
 package com.komodo.personservice.service.implementation;
 
+import com.komodo.personservice.dto.BookingAcknowledgement;
+import com.komodo.personservice.dto.BookingRequest;
 import com.komodo.personservice.dto.PersonDTO;
+import com.komodo.personservice.entity.PaymentInfo;
 import com.komodo.personservice.entity.Person;
+import com.komodo.personservice.repository.PaymentInfoRepository;
 import com.komodo.personservice.repository.PersonRepository;
 import com.komodo.personservice.service.PersonService;
+import com.komodo.personservice.utils.PaymentUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +18,11 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -23,6 +30,8 @@ import java.util.List;
 @CacheConfig(cacheNames = {"persons"})
 public class PersonServiceImplementation implements PersonService {
     private final PersonRepository personRepository;
+
+    private final PaymentInfoRepository paymentInfoRepository;
     private final ModelMapper modelMapper;
     private final EntityManager entityManager;
 
@@ -67,6 +76,22 @@ public class PersonServiceImplementation implements PersonService {
         List<Person> person = query.getResultList();
         if(person.isEmpty()) return new ArrayList<>();
         return person;
+    }
+
+    @Override
+    @Transactional
+    public BookingAcknowledgement bookTicket(BookingRequest request) {
+        Person person = request.getPerson();
+        person = personRepository.save(person);
+
+        PaymentInfo paymentInfo = request.getPaymentInfo();
+
+        PaymentUtils.validateCreditLimit(paymentInfo.getAccountNo(), person.getFare());
+
+        paymentInfo.setPersonId(person.getPId());
+        paymentInfo.setAmount(person.getFare());
+        paymentInfoRepository.save(paymentInfo);
+        return new BookingAcknowledgement("SUCCESS", person.getFare(), UUID.randomUUID().toString().split("-")[0], person);
     }
 
 }
