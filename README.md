@@ -7,7 +7,7 @@
 This project is simple, you just need to make sure there is docker in your computer, type 'make start' in your terminal and server will run. Furthermore, the api documentation as testing is available in every services.
 
 
-This project implement the concept below:
+This project implement the concepts below:
 
 o Spring IoC,
 
